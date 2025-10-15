@@ -9,7 +9,7 @@ DB_USER = 'Admin'
 DB_PASSWORD = "p4ssw0rdDB"
 
 def conectar_db():
-    """Conecta a la base de datos PostgreSQL y retorna la conexión."""
+    #"""Conecta a la base de datos PostgreSQL y retorna la conexión."""
     try:
         conn = psycopg2.connect(
             host=DB_HOST,
@@ -20,15 +20,15 @@ def conectar_db():
         )
         return conn
     except Exception as e:
-        print(e)
-        # print("Error de conexión a la base de datos:", e)
+        #print(e)
+        print("Error de conexión a la base de datos:", e)
         return None
 
 def obtener_datos_usuario(username, password):
-    """Consulta la base de datos para obtener los datos de un usuario a partir de sus credenciales."""
+    #"""Consulta la base de datos para obtener los datos de un usuario a partir de sus credenciales."""
     conn = conectar_db()
     if not conn:
-        return
+        return #Salimos de la función
     try:
         cursor = conn.cursor()
         # Verificar si el usuario y contraseña existen en la tabla credenciales
@@ -38,6 +38,7 @@ def obtener_datos_usuario(username, password):
         JOIN usuarios u ON c.id_usuario = u.id_usuario
         WHERE c.username = %s AND c.password_hash = %s;
         """
+        #Ejecutar la consulta
         cursor.execute(query, (username, password))
         usuario = cursor.fetchone()
         if usuario:
